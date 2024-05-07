@@ -15,4 +15,10 @@ def query(payload):
 @cl.on_message
 async def main(message: cl.Message):
     ia = query({"inputs": message.content})
-    await cl.Message(ia).send()
+    result = []
+    for row in ia:
+        for row1 in row:
+            print(row1)
+            result.append(row1)
+    result = [f"{round(row['score']*100, 2)}% de ser {row['label']}" for row in result]
+    await cl.Message(f"Previsão Do Comentário:\n{result}").send()
